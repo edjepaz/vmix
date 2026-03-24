@@ -1,56 +1,52 @@
-# 🔊 vmix - Native Terminal Volume Mixer
+# 🔊 vmix — Minimal Modern Volume Mixer
+
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Release](https://img.shields.io/github/v/release/edjepaz/vmix)](https://github.com/edjepaz/vmix/releases)
 
 `vmix` is a beautifully lightweight, ultra-fast Python Terminal User Interface (TUI) for actively managing your operating system's audio volume—both your Master Output and individual application sessions concurrently.
 
-By securely hooking into core OS audio frameworks directly via memory interfaces, `vmix` achieves **flicker-free rendering**, flawless alignment, and **zero-latency volume increments**, avoiding the overhead or bug hazards of external command-line `.exe` dependencies. 
+![vmix Gameplay](screenshot.png)
 
-![vmix Example Dashboard](https://github.com/placeholder-demo/vmix/raw/main/screenshots/demo.png)
+## ✨ Why vmix?
+Traditional volume mixers are cluttered. `vmix` uses a **Modern Minimalist Dashboard** to show only what you need, with high-performance hooks directly into OS audio backends.
 
-## ✨ Features
-- **Ultra-Fast Backend:** Bypasses console wrappers entirely to map straight to the COM audio backend.
-- **Real-Time Synchronous Meters:** Live audio statuses exist for every process dynamically running on your system, not just the selected track. 
-- **Pure Terminal Interface:** Draws directly with standard ANSI escapes using non-blocking terminal polling.
-- **Cross-Platform Foundation:** Built to support an abstracted Backend pipeline ready for Windows, Linux (PulseAudio/PipeWire), and macOS.
+- **🚀 Ultra-Fast Rendering**: Flicker-free terminal rendering with zero-latency response.
+- **🎧 Device & Session Aware**: Mix master output and individual app volumes (Spotify, Chrome, etc) in one view.
+- **🖱️ Mouse & Keyboard Responsive**: Full scroll wheel support for navigating long lists of apps.
+- **📦 Zero-Impact Distribution**: Standalone binaries available for all major platforms (Windows/Linux/macOS) with no Python knowledge required.
 
-## 🚀 Installation & Setup
+## 🚀 Installation
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/your-username/vmix.git
-   cd vmix
-   ```
+### 💾 Standalone Binaries (Recommended)
+Download the latest binaries for your platform from the [Github Releases](https://github.com/edjepaz/vmix/releases). No Python install or extra dependencies needed.
 
-2. **Install core dependencies:**
+### 🐍 From Source
+1. **Clone & Install Dependencies**:
    ```bash
    pip install psutil
+   # For Windows:
+   pip install pycaw comtypes
+   ```
+2. **Run**:
+   ```bash
+   python vmix.py
    ```
 
-3. **Install OS-Specific Modules:**
-   - **For Windows:** Requires Python Core Audio setup.
-     ```bash
-     pip install pycaw comtypes
-     ```
-   - **For Linux:** *(Backend integration planned via `pulsectl`)*
-   - **For macOS:** *(Backend integration planned via `pyobjc` / Native Osascript)*
+## 🎮 Controls
 
-## 🎮 Usage 
+| Action | Control |
+| :--- | :--- |
+| **Navigate** | `↑` / `↓` or **Mouse Scroll Wheel** |
+| **Adjust Volume** | `←` / `→` |
+| **Toggle Mute** | `M` |
+| **Refresh List** | `R` |
+| **Quit** | `Q` or `Esc` |
 
-Run the tool right from your console:
-```bash
-python vmix.py
-```
+## 🛠️ Multi-Platform Support
+- ✅ **Windows**: Fully supported via native COM hooks.
+- 🚧 **Linux**: PulseAudio/PipeWire integration in progress.
+- 🚧 **macOS**: Core Audio abstraction planned.
 
-### Controls:
-- `Up / Down` (↑/↓): Navigate sessions
-- `Left / Right` (←/→) or `, / .`: Decrease/Increase volume by 5%
-- `M`: Toggle mute
-- `R`: Force refresh the target list manually
-- `Q` or `Esc`: Quit out of the application
-
-## 🛠 Project Structure & Contributing
-The project is decoupled securely to welcome open-source contributions. 
-- **`vmix.py`** contains the master `VolumeMixer` TUI class.
-- The **`Backend`** parent interface enforces OS abstraction APIs natively. Developers can create new modules inheriting `Backend` (e.g., `LinuxBackend`) to push feature parity across operating systems. 
-
-## ⚖️ License
-This project is open-sourced under the MIT License.
+---
+*Created by [edjepaz](https://github.com/edjepaz) as an open-source project.*
