@@ -1,0 +1,38 @@
+vccli v0.3.0
+  Volume Control CLI allows you to control audio endpoints (Devices) & audio sessions (Sessions) from the commandline.
+
+USAGE:
+  vccli [TARGET] [OPTIONS]
+
+  The '[TARGET]' field determines which device or session to target with commands, and accepts a variety of inputs:
+    - Device ID                    (DGUID)      Selects an audio device using the string representation of its GUID.
+    - Device Name                  (DNAME)      Selects an audio device using its controller interface's name.
+    - Process ID                   (PID)        Selects a specific audio session using a known process ID number.
+    - Process Name                 (PNAME)      Selects a specific audio session using a process name.
+    - Session Identifier           (SUID)       Selects any audio session with the given Session Identifier.
+    - Session Instance Identifier  (SGUID)      Selects a specific audio session using its Session Instance Identifier.
+    - Blank                                     Gets the default audio endpoint for the type specified by '-d'|'--dev'.
+
+  Certain device endpoint names (DNAME) that are built-in to Windows contain trailing whitespace, such as
+   'USB Audio Codec '; keep this in mind when searching for devices by name, and/or use the ('-f'|'--fuzzy') option.
+
+OPTIONS:
+  -h, --help                   Shows this help display, then exits.
+      --version                Prints the current version number, then exits.
+  -q, --quiet                  Show only minimal console output for getters; don't show any console output for setters.
+  -n, --no-color               Disables ANSI color sequences; this option is implied when '-q'|'--quiet' is specified.
+  -d, --dev <i|o>              Selects input or output devices.  When targeting an endpoint, this determines the type
+                                of device to use; when targeting a session, limits the search to devices of this type.
+  -f, --fuzzy                  Fuzzy search; allows partial matches instead of requiring a full match.
+  -e, --extended               Shows additional fields when used with the query or list options.
+
+OPTIONS - Modes, Getters, & Setters:
+  -Q, --query                  Shows information about the specified TARGET if it exists; otherwise shows an error.
+  -l, --list                   Prints a list (sorted by PID) of all processes with an active audio session, then exits.
+  -L, --list-dev               Prints a list of all audio endpoints that aren't unplugged or disabled, then exits.
+  -v, --volume [0-100]         Gets or sets (when a number is specified) the volume of the target.
+  -I, --increment <0-100>      Increments the volume of the target by the specified number.
+  -D, --decrement <0-100>      Decrements the volume of the target by the specified number.
+  -m, --is-muted [true|false]  Gets or sets (when a boolean is specified) the mute state of the target.
+  -M, --mute                   Mutes the target.    (Equivalent to '-m=true'|'--is-muted=true')
+  -U, --unmute                 Unmutes the target.  (Equivalent to '-m=false'|'--is-muted=false')
