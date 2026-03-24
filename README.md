@@ -49,4 +49,7 @@ Download the latest binaries for your platform from the [Github Releases](https:
 - 🚧 **macOS**: Core Audio abstraction planned.
 
 ---
+## 🎨 Inspiration
+This project was inspired by the work of [bjarneo/cliamp](https://github.com/bjarneo/cliamp), a minimalist audio controller for macOS. `vmix` aims to bring that same aesthetic and speed to cross-platform volume management.
+
 *Created by [edjepaz](https://github.com/edjepaz) as an open-source project.*
