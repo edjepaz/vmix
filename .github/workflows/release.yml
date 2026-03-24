@@ -34,13 +34,10 @@ jobs:
         os: [windows-latest, ubuntu-latest, macos-latest]
         include:
           - os: windows-latest
-            artifact_name: vmix-win64.exe
             asset_name: vmix-windows-amd64.exe
           - os: ubuntu-latest
-            artifact_name: dist/vmix
             asset_name: vmix-linux-amd64
           - os: macos-latest
-            artifact_name: dist/vmix
             asset_name: vmix-macos-universal
 
     steps:
@@ -65,11 +62,20 @@ jobs:
           pyinstaller --onefile vmix.py --name vmix
         shell: bash
 
-      - name: Rename & Upload
+      - name: Prepare Binary
+        run: |
+          if [ "${{ runner.os }}" == "Windows" ]; then
+            mv dist/vmix.exe dist/${{ matrix.asset_name }}
+          else
+            mv dist/vmix dist/${{ matrix.asset_name }}
+          fi
+        shell: bash
+
+      - name: Upload Release Asset
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            ${{ matrix.artifact_name == 'vmix-win64.exe' && 'dist/vmix.exe' || matrix.artifact_name }}
+          files: dist/${{ matrix.asset_name }}
           tag_name: ${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # Skip fail for race condition on tag creation if any, though handled by needs: create_release
