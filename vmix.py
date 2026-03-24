@@ -30,6 +30,8 @@ SHOW_CURSOR = "\033[?25h"
 CLEAR_LINE = "\033[K"
 ENABLE_MOUSE = "\033[?1000h\033[?1015h\033[?1006h"
 DISABLE_MOUSE = "\033[?1000l\033[?1015l\033[?1006l"
+ENTER_ALT_SCREEN = "\033[?1049h"
+EXIT_ALT_SCREEN = "\033[?1049l"
 
 FILLED_BAR = "█"
 EMPTY_BAR = "░"
@@ -358,7 +360,7 @@ class VolumeMixer:
             self.targets = self.backend.get_targets()
 
     def start(self):
-        sys.stdout.write(HIDE_CURSOR + ENABLE_MOUSE)
+        sys.stdout.write(ENTER_ALT_SCREEN + HIDE_CURSOR + ENABLE_MOUSE)
         sys.stdout.flush()
         self.targets = self.backend.get_targets()
         self.term_input = TerminalInput()
@@ -368,15 +370,7 @@ class VolumeMixer:
                 self.handle_input()
         finally:
             self.term_input.cleanup()
-            sys.stdout.write(SHOW_CURSOR + DISABLE_MOUSE)
-            
-            if self.targets:
-                import shutil
-                terminal_size = shutil.get_terminal_size((80, 24))
-                list_height = max(3, terminal_size.lines - 5)
-                drawn_lines = min(len(self.targets), list_height) + 5
-                sys.stdout.write(f"\033[{drawn_lines}B")
-            sys.stdout.write("\n")
+            sys.stdout.write(SHOW_CURSOR + DISABLE_MOUSE + EXIT_ALT_SCREEN)
             sys.stdout.flush()
 
 
